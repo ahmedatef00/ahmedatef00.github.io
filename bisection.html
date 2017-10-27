@@ -11,7 +11,7 @@
     <script>
     $(function(){
       $("#submit").click(function(){
-
+        $("#actual_results").empty();
         var eP = $("#equationField").val();
         var equation = math.parse(eP.toString());
         var simplified = math.simplify(equation)
@@ -47,7 +47,7 @@ $("#results").css("display","block");
               $("#actual_results").append("<tr>");
               $("#actual_results").append("<td>"+aVar+"</td>");
               $("#actual_results").append("<td>"+bVar+"</td>");
-                $("#actual_results").append("<td>"+cVar+"</td>");
+              $("#actual_results").append("<td>"+cVar+"</td>");
               $("#actual_results").append("<td>"+(bVar-cVar)+"</td>");
               $("#actual_results").append("<td>"+cVal+"</td>");
               $("#actual_results").append("</tr>");
