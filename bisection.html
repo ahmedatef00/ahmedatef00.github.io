@@ -1,0 +1,99 @@
+<html>
+<head>
+  <title>Bisection Method Evaluator/Calculator</title>
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+
+
+    <link rel="stylesheet" href="http://cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <script src="math.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+    <script>
+    $(function(){
+      $("#submit").click(function(){
+
+        var eP = $("#equationField").val();
+        var equation = math.parse(eP.toString());
+        var simplified = math.simplify(equation)
+        var aVar = $("#rangeAField").val();
+        var bVar = $("#rangeBField").val();
+        var epsilon = $("#EField").val();
+        var aVal = simplified.eval({x: aVar});
+        var bVal = simplified.eval({x: bVar});
+        var btimesa = math.eval(math.parse(aVal + " * " + bVal).toString());
+        if(btimesa < 0 ){
+          if(epsilon >= 1){
+            alert("Epsilon should be less than 1.")
+          }else{
+$("#results").css("display","block");
+
+              cVar = (parseFloat(bVar) + parseFloat(aVar))/2;
+              cVal = simplified.eval({x: cVar});
+              $("#actual_results").append("<tr>");
+              $("#actual_results").append("<td>"+aVar+"</td>");
+              $("#actual_results").append("<td>"+bVar+"</td>");
+                $("#actual_results").append("<td>"+cVar+"</td>");
+              $("#actual_results").append("<td>"+(bVar-cVar)+"</td>");
+              $("#actual_results").append("<td>"+cVal+"</td>");
+              $("#actual_results").append("</tr>");
+              for(var i =0; i < 100; i++){
+              if(cVal < 0){
+                aVar = cVar;
+              }else{
+                bVar = cVar;
+              }
+              cVar = (parseFloat(bVar) + parseFloat(aVar))/2;
+              cVal = simplified.eval({x: cVar});
+              $("#actual_results").append("<tr>");
+              $("#actual_results").append("<td>"+aVar+"</td>");
+              $("#actual_results").append("<td>"+bVar+"</td>");
+                $("#actual_results").append("<td>"+cVar+"</td>");
+              $("#actual_results").append("<td>"+(bVar-cVar)+"</td>");
+              $("#actual_results").append("<td>"+cVal+"</td>");
+              $("#actual_results").append("</tr>");
+
+              if(bVar - cVar <= epsilon)
+                return false;
+            }
+
+          }
+
+        }else{
+          alert("B times A should be negative.");
+        }
+      });
+    });
+    </script>
+</head>
+<body>
+<h2>Bisection Method Calculator</h2>
+  <fieldset>
+    <label for="equationField">Equation</label>
+    <input type="text" placeholder="x^3+3*x^2-x" id="equationField">
+    <label for="rangeAField">a</label>
+    <input type="text" placeholder="-1" id="rangeAField">
+    <label for="rangeBField">b</label>
+    <input type="text" placeholder="6" id="rangeBField">
+    <label for="EField">&epsilon;</label>
+    <input type="text" placeholder="6" id="EField">
+    <input class="button-primary" id="submit" type="submit" value="Solve">
+  </fieldset>
+
+<table style="display:none;" id="results">
+  <thead>
+    <tr>
+      <th>a</th>
+      <th>b</th>
+      <th>c</th>
+      <th>|b-c|</th>
+      <th>f(c)</th>
+    </tr>
+  </thead>
+  <tbody id="actual_results">
+
+  </tbody>
+</table>
+<footer>&copy; Developed by <a href="http://ihabshea.me">Ihab McShea</a>.</footer>
+</body>
+
+</html>
