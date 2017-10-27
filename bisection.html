@@ -52,7 +52,7 @@ $("#results").css("display","block");
               $("#actual_results").append("<td>"+cVal+"</td>");
               $("#actual_results").append("</tr>");
 
-              if(bVar - cVar <= epsilon)
+              if(bVar - cVar <= epsilon || cVal == 0)
                 return false;
             }
 
