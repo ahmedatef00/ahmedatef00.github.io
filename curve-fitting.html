@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by TEMPLATED
+http://templated.co
+Released for free under the Creative Commons Attribution License
+
+Name       : Cerulean
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20131223
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+
+
+	<link rel="stylesheet" href="http://cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+	<script src="math.min.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="http://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+<script>
+$(document).ready(function() {
+        var max_fields      = 24;
+
+        var x = 3;
+				var counter =0;
+				var total =0;
+        $("#addfields").click(function(e){
+            e.preventDefault();
+            if(x < max_fields){
+                x++;
+								counter++;
+                $("#extra").append('<tr><td width="50%"><input type="text" id="x'+x+'" /></td><td width="50%"><input type="text" id="y'+x+'" /></td></tr>'); //add input box
+
+            }
+      else
+      {
+      alert('You Reached the limits')
+      }
+
+        });
+
+			$("#solve_linear").click(function(e){
+				$("#linear").css("display","block");
+					$("#line_values").empty();
+					$("#equation").empty();
+					$("#sum_line").empty();
+				$("#parabola").css("display","none");
+					total = counter+4;
+				e.preventDefault();
+				var xs=[];
+				var ys=[];
+				var xss=[];
+				var xys=[];
+				for(var i=0; i<total; i++){
+					xs.push($("#x"+i+"").val());
+					ys.push($("#y"+i+"").val());
+					xss.push($("#x"+i+"").val()*$("#x"+i+"").val());
+					xys.push($("#x"+i+"").val()*$("#y"+i+"").val());
+					$("#line_values").append('<tr><td>'+$("#x"+i+"").val()+'</td><td>'+$("#y"+i+"").val()+'</td><td>'+$("#x"+i+"").val()*$("#y"+i+"").val()+'</td><td>'+$("#x"+i+"").val()*$("#x"+i+"").val()+'</sup></td></tr>');
+					if(x < 4 && ($("#x"+i+"").val() =='')){
+							alert("You have to at least fill 4 fields.")
+					}
+				}
+				var sum_x=0;
+				var sum_y=0;
+				var sum_xs=0;
+				var sum_xy=0;
+				for(var i=0; i<xs.length;i++){
+					sum_x+=parseFloat(xs[i]);
+				}
+				for(var i=0; i<ys.length;i++){
+					sum_y+=parseFloat(ys[i]);
+				}
+				for(var i=0; i<xss.length;i++){
+					sum_xs+=parseFloat(xss[i]);
+				}
+				for(var i=0; i<xys.length;i++){
+					sum_xy+=parseFloat(xys[i]);
+				}
+				$("#sum_line").append("<td>&Sigma;X="+sum_x+"</td><td>&Sigma;Y="+sum_y+"</td><td>&Sigma;X.Y="+sum_xy+"</td><td>&Sigma;X<sup>2</sup>="+sum_xs+"</td>")
+				var a = [[xs.length,sum_x],[sum_x,sum_xs]];
+				var b= [sum_y,sum_xy];
+				var x = math.usolve(a, b);
+				$("#equation").append("<b>Line equation:</b>  y="+x[0]+"+"+x[1]+"x");
+			});
+			$("#solve_parabola").click(function(e){
+				$("#linear").css("display","none");
+				$("#parabola_values").empty();
+				$("#parabola_equation").empty();
+				$("#sum_parabola").empty();
+				$("#parabola").css("display","block");
+					total = counter+4;
+				e.preventDefault();
+				var xs=[];
+				var ys=[];
+				var xss=[];
+				var xys=[];
+				var x3s =[];
+				var x4s = [];
+				var xsy= [];
+				for(var i=0; i<total; i++){
+					xs.push($("#x"+i+"").val());
+					ys.push($("#y"+i+"").val());
+					xss.push($("#x"+i+"").val()*$("#x"+i+"").val());
+					xys.push($("#x"+i+"").val()*$("#y"+i+"").val());
+					xsy.push($("#x"+i+"").val()*$("#x"+i+"").val()*$("#y"+i+"").val());
+					x3s.push($("#x"+i+"").val()*$("#x"+i+"").val()*$("#x"+i+"").val());
+					x4s.push($("#x"+i+"").val()*$("#x"+i+"").val()*$("#x"+i+"").val()*$("#x"+i+"").val());
+					$("#parabola_values").append('<tr><td>'+$("#x"+i+"").val()+'</td><td>'+$("#y"+i+"").val()+'</td><td>'+$("#x"+i+"").val()*$("#y"+i+"").val()+'</td><td>'+$("#x"+i+"").val()*$("#x"+i+"").val()+'</td><td>'+$("#x"+i+"").val()*$("#x"+i+"").val()*$("#x"+i+"").val()+'</td><td>'+$("#x"+i+"").val()*$("#x"+i+"").val()*$("#x"+i+"").val()*$("#x"+i+"").val()+'</td><td>'+$("#x"+i+"").val()*$("#x"+i+"").val()*$("#y"+i+"").val()+'</td></tr>');
+					if(x < 4 && ($("#x"+i+"").val() =='')){
+							alert("You have to at least fill 4 fields.")
+					}
+				}
+				var sum_x=0;
+				var sum_y=0;
+				var sum_xy=0;
+				var sum_xs=0;
+				var sum_x3=0;
+				var sum_x4=0;
+				var sum_x2y=0;
+
+				for(var i=0; i<xs.length;i++){
+					sum_x+=parseFloat(xs[i]);
+				}
+				for(var i=0; i<ys.length;i++){
+					sum_y+=parseFloat(ys[i]);
+				}
+				for(var i=0; i<xss.length;i++){
+					sum_xs+=parseFloat(xss[i]);
+				}
+				for(var i=0; i<xys.length;i++){
+					sum_xy+=parseFloat(xys[i]);
+				}
+				for(var i=0; i<xys.length;i++){
+					sum_x3+=parseFloat(x3s[i]);
+				}
+				for(var i=0; i<xys.length;i++){
+					sum_x4+=parseFloat(x4s[i]);
+				}
+				for(var i=0; i<xys.length;i++){
+					sum_x2y+=parseFloat(xsy[i]);
+				}
+				$("#sum_parabola").append("<td>&Sigma;X="+sum_x+"</td><td>&Sigma;Y="+sum_y+"</td><td>&Sigma;X.Y="+sum_xy+"</td><td>&Sigma;X<sup>2</sup>="+sum_xs+"</td>");
+				$("#sum_parabola").append("<td>&Sigma;X<sup>3</sup>="+sum_x3+"</td><td>&Sigma;X<sup>4</sup>="+sum_x4+"</td><td>&Sigma;X<sup>2</sup>.Y="+sum_x2y+"</td>");
+				var a = [[xs.length,sum_x,sum_xs],[sum_x,sum_xs,sum_x3],[sum_xs,sum_x3,sum_x4]];
+				var b= [sum_y,sum_xy,sum_x2y];
+				var x = math.usolve(a, b);
+				$("#parabola_equation").append("<b>Parabola equation:</b>  y="+x[0]+"+"+x[1]+"<b>x</b>+"+x[2]+"<b>x<sup>2</sup></b>");
+			});
+        $(wrapper).on("click",".delete", function(e){
+            e.preventDefault(); $(this).parent('div').remove(); x--;
+        });
+
+    });
+</script>
+</head>
+<body>
+	<h2>Curve Fitting</h2>
+
+		<table style="width:50%; ">
+			<tr>
+				<td  width="30%">X values</td>
+				<td width="30%">Y values</td>
+			</tr>
+			<tr>
+				<td width="30%"><input type="text" id="x0" /></td>
+				<td width="30%"><input type="text" id="y0" /></td>
+			</tr>
+			<tr>
+				<td  width="30%"><input type="text" id="x1" /></td>
+				<td width="30%"><input type="text" id="y1" /></td>
+			</tr>
+			<tr>
+				<td  width="30%"><input type="text" id="x2" /></td>
+				<td width="30%"><input type="text" id="y2" /></td>
+			</tr>
+			<tr>
+				<td  width="30%"><input type="text" id="x3" /></td>
+				<td width="30%"><input type="text" id="y3" /></td>
+			</tr>
+
+			<tbody id="extra"></tbody>
+					<tr>
+						<td width="100%">
+								<button id="addfields">Extra data</button>
+								<button id="solve_linear">Fit a Straight Line</button>
+								<button id="solve_parabola">Fit a Parabola</button>
+						</td>
+					</tr>
+		</table>
+
+
+	<div style="display:none;" id="linear">
+					<div id="equation"></div>
+					<table>
+	  <thead>
+	    <tr>
+	      <th>x</th>
+	      <th>y</th>
+	      <th>x.y</th>
+	      <th>x<sup>2</sup></th>
+	    </tr>
+	  </thead>
+	  <tbody id="actual_results">
+
+			<table>
+				<tr>
+					<td>X</td>
+					<td>Y</td>
+					<td>X.Y</td>
+					<td>X<sup>2</sup></td>
+				</tr>
+				<tbody id="line_values"></tbody>
+				<tr id="sum_line">
+
+				</tr>
+			</table>
+	  </tbody>
+	</table>
+</div>
+	<div style="display:none;" id="parabola">
+
+			<div id="parabola_equation"></div>
+		<table>
+
+		<thead>
+			<tr>
+
+			</tr>
+		</thead>
+		<tbody id="actual_results">
+
+			<table>
+				<tr>
+					<th>x</th>
+					<th>y</th>
+					<th>x.y</th>
+					<th>x<sup>2</sup></th>
+					<th>x<sup>3</sup></th>
+					<th>x<sup>4</sup></th>
+					<th>x<sup>2</sup>y</th>
+				</tr>
+				<tbody id="parabola_values"></tbody>
+				<tr id="sum_parabola">
+
+				</tr>
+			</table>
+		</tbody>
+	</table>
+	<footer>&copy; Developed by <a href="http://ihabshea.me">Ihab McShea</a>.</footer>
+	</body>
+</body>
+</html>
