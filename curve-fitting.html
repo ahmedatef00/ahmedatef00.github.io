@@ -87,7 +87,7 @@ $(document).ready(function() {
 				$("#sum_line").append("<td>&Sigma;X="+sum_x+"</td><td>&Sigma;Y="+sum_y+"</td><td>&Sigma;X.Y="+sum_xy+"</td><td>&Sigma;X<sup>2</sup>="+sum_xs+"</td>")
 				var a = [[xs.length,sum_x],[sum_x,sum_xs]];
 				var b= [sum_y,sum_xy];
-				var x = math.usolve(a, b);
+				var x = math.lusolve(a, b);
 				$("#equation").append("<b>Line equation:</b>  y="+x[0]+"+"+x[1]+"x");
 			});
 			$("#solve_parabola").click(function(e){
@@ -151,7 +151,7 @@ $(document).ready(function() {
 				$("#sum_parabola").append("<td>&Sigma;X<sup>3</sup>="+sum_x3+"</td><td>&Sigma;X<sup>4</sup>="+sum_x4+"</td><td>&Sigma;X<sup>2</sup>.Y="+sum_x2y+"</td>");
 				var a = [[xs.length,sum_x,sum_xs],[sum_x,sum_xs,sum_x3],[sum_xs,sum_x3,sum_x4]];
 				var b= [sum_y,sum_xy,sum_x2y];
-				var x = math.usolve(a, b);
+				var x = math.lusolve(a, b);
 				$("#parabola_equation").append("<b>Parabola equation:</b>  y="+x[0]+"+"+x[1]+"<b>x</b>+"+x[2]+"<b>x<sup>2</sup></b>");
 			});
         $(wrapper).on("click",".delete", function(e){
